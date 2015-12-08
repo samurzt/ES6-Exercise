@@ -7,7 +7,7 @@ for (let i=0; i < themesAvailable.length; i++) {
     console.log("Trying theme", themesAvailable[i]);
     styleConsoleLib.setConsoleTheme(themesAvailable[i]);   
     styleConsoleLib.log("hi log");
-    styleConsoleLib.consoleStyleFunctions.info("hi info");
-    styleConsoleLib.consoleStyleFunctions.warn("hi warn");
-    styleConsoleLib.consoleStyleFunctions.error("hi error");
+    styleConsoleLib.info("hi info");
+    styleConsoleLib.warn("hi warn");
+    styleConsoleLib.error("hi error");
 }
