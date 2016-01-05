@@ -1,4 +1,6 @@
-const points = [{
+import Immutable from 'immutable';
+
+const points = Immutable.fromJS([{
     x: 1,
     y: 1
 }, {
@@ -46,44 +48,34 @@ const points = [{
 }, {
     x: 1,
     y: -1
-}];
+}]);
 
 
 let maxvector = getMaxVector(points);
 
 
-function getMaxVector(points=[])
+function getMaxVector(points)
 {
-       let maxvector={
+       let maxvector=Immutable.Map({
             vector: 0,
             point1Index: 0,
             point2Index: 0
-        };
+        });
     points.map((pointA, aIndex)=>{
      points.map((pointB, bIndex) => {
-        let vector = Math.sqrt(Math.pow(pointA.x - pointB.x, 2) + Math.pow(pointA.y - pointB.y, 2));
-        if (vector > maxvector.vector) {
-            maxvector.vector = vector;
-            maxvector.point1Index = aIndex;
-            maxvector.point2Index = bIndex;
+        let vector = Math.sqrt(Math.pow(pointA.get('x') - pointB.get('x'), 2) + Math.pow(pointA.get('y') - pointB.get('y'), 2));
+        if (vector > maxvector.get('vector')) {
+            maxvector = maxvector.set('vector', vector);
+            maxvector = maxvector.set('point1Index',aIndex);
+            maxvector = maxvector.set('point2Index', bIndex) ;
         }
      });
     }); 
     return maxvector;
 }
 
-/*for (let i = 0; i < points.length; i++) {
-     points.map((p) => {
-        let vector = Math.sqrt(Math.pow(points[i].x - p.x, 2) + Math.pow(points[i].y - p.y, 2));
-        if (vector > maxvector.vector) {
-            maxvector.vector = vector;
-            maxvector.point1Index = i;
-            maxvector.point2Index = points.indexOf(p);
-        }
-    });
-}
-*/
+console.log("Max vector: ", maxvector.toJS());
 
-console.log("Max vector: ", maxvector.vector);
-console.log("point1: ", points[maxvector.point1Index]);
-console.log("point2: ", points[maxvector.point2Index]);
+console.log("Max vector: ", maxvector.get('vector'));
+console.log("point1: ", points.get(maxvector.get('point1Index')).toJS());
+console.log("point2: ", points.get(maxvector.get('point2Index')).toJS());
