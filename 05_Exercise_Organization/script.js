@@ -1,7 +1,9 @@
 //find all employees of razorthink
 //find all employees of apple whose age is less than 30
 
-const people = [{
+import Immutable from 'immutable';
+
+const people = Immutable.fromJS([{
     name: 'Sandeep',
     empId: 0,
     age: 23,
@@ -21,9 +23,9 @@ const people = [{
     empId: 4,
     age: 53,
     orgId: 3
-}]
+}]);
 
-var organizations = [{
+var organizations = Immutable.fromJS([{
     name: 'Razorthink',
     id: 1,
     employees: [0, 3]
@@ -35,22 +37,30 @@ var organizations = [{
     name: 'Microsoft',
     id: 3,
     employees: [4]
-}];
+}]);
 
 function getCompanyIdByName(companyName) {
-    return (organizations.filter((x) => { return x.name == companyName; })[0].id );
+    return (organizations.filter((x) => { return x.get('name') == companyName; }).get(0).get('id') );
 }
 
 let rztId = getCompanyIdByName('Razorthink');
-let rztEmployees = people.filter((e) => { return (e.orgId == rztId); });
+
+let rztEmployees = people.filter((e) => { return (e.get('orgId') == rztId); });
 console.log("Razorthink Employees: ");
-for (let x in rztEmployees) {
-    console.log(rztEmployees[x]);
-}
+rztEmployees.forEach(
+    (item, index, array)=>
+    {
+        console.log(item.get('name'));
+    }
+);
+
 
 let appleId = getCompanyIdByName('Apple');
-let appleEmployees = people.filter((e) => { return (e.orgId == appleId && e.age < 30); });
+let appleEmployees = people.filter((e) => { return (e.get('orgId') == appleId && e.get('age') < 30); });
 console.log("Apple Employees: ");
-for (let x in appleEmployees) {
-    console.log(appleEmployees[x]);
-}
+appleEmployees.forEach(
+    (item, index, array)=>
+    {
+        console.log(item.get('name'));
+    }
+);
